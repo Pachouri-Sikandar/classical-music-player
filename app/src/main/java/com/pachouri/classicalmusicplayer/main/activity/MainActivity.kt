@@ -1,12 +1,15 @@
 package com.pachouri.classicalmusicplayer.main.activity
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu
-import android.view.MenuItem
+import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import com.pachouri.classicalmusicplayer.R
-
+import com.pachouri.classicalmusicplayer.infrastructure.api.Api
+import com.pachouri.classicalmusicplayer.infrastructure.api.callback.ApiCallback
+import com.pachouri.classicalmusicplayer.infrastructure.api.response.AuthorizationResponse
+import com.pachouri.classicalmusicplayer.infrastructure.dao.SessionSharedPreferences
+import com.pachouri.classicalmusicplayer.util.AppConstants
+import com.pachouri.classicalmusicplayer.util.CommonUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,26 +18,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        checkAccessToken()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
+    private fun checkAccessToken() {
+        val sessionPreferences = SessionSharedPreferences(this)
+        if (TextUtils.isEmpty(sessionPreferences.getAuthorizationKey())) {
+            val conversionString = AppConstants.APP_CLIENT_ID + ":" + AppConstants.APP_SECRET_KEY
+            val authorizationKey = CommonUtils.base64Conversion(conversionString, "Basic")
+            sessionPreferences.saveAuthorizationKey(authorizationKey)
+            sessionPreferences.saveAuthorizationType(true)
+            Api.getInstance(application, this)
+                .getAccessToken(object : ApiCallback<AuthorizationResponse>() {
+                    override fun onSuccess(response: AuthorizationResponse) {
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+                    }
+
+                    override fun onError(errorMesage: String?) {
+
+                    }
+                })
+        } else {
+            sessionPreferences.saveAuthorizationType(false)
         }
     }
 }
