@@ -10,11 +10,15 @@ class AuthorizationResponse {
 
     @SerializedName("access_token")
     @Expose
-    private val accessToken: String? = null
+    lateinit var accessToken: String
     @SerializedName("token_type")
     @Expose
     private val tokenType: String? = null
     @SerializedName("expires_in")
     @Expose
     private val expiresIn: Long = 0
+
+    fun getToken(): String {
+        return accessToken
+    }
 }
