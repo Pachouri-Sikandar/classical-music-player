@@ -2,6 +2,7 @@ package com.pachouri.classicalmusicplayer.util
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.Base64
 import android.widget.Toast
 
 /**
@@ -34,6 +35,20 @@ class CommonUtils {
                 isInternetConnected = false
             }
             return isInternetConnected
+        }
+
+        /**
+         * Converts given string to base64 and adds required prefix to it
+         */
+        fun base64Conversion(conversionString: String, prefix: String): String {
+            var bytes = ByteArray(0)
+            try {
+                bytes = conversionString.toByteArray(Charsets.UTF_8)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            val encoded = Base64.encodeToString(bytes, Base64.DEFAULT)
+            return prefix + " " + encoded
         }
     }
 }
