@@ -18,12 +18,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", "\"\""
+            buildConfigField "String", "BASE_URL", "\"https://accounts.spotify.com/\""
         }
         debug {
             debuggable true
             minifyEnabled false
-            buildConfigField "String", "BASE_URL", "\"\""
+            buildConfigField "String", "BASE_URL", "\"https://accounts.spotify.com/\""
         }
     }
     compileOptions {

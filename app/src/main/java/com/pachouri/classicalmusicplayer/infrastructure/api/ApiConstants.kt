@@ -10,5 +10,7 @@ import com.pachouri.classicalmusicplayer.BuildConfig
 class ApiConstants {
     companion object {
         const val BASE_URL = BuildConfig.BASE_URL
+        const val API_PATH = "api/"
+        const val ENDPOINT_GET_TOKEN = API_PATH + "token"
     }
 }

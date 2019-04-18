@@ -47,7 +47,7 @@ class CommonUtils {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            val encoded = Base64.encodeToString(bytes, Base64.DEFAULT)
+            val encoded = Base64.encodeToString(bytes, Base64.NO_WRAP)
             return prefix + " " + encoded
         }
     }
