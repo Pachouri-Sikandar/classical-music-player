@@ -1,5 +1,6 @@
 package com.pachouri.classicalmusicplayer.infrastructure.api.provider.retrofit2
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.pachouri.classicalmusicplayer.infrastructure.api.ApiConstants
 import okhttp3.OkHttpClient
@@ -16,35 +17,36 @@ import java.util.concurrent.TimeUnit
  */
 class RetrofitSingleton {
 
-    companion object {
-        val instance: RetrofitInterface by lazy {
-            val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BODY
+    @Volatile
+    private var instace: RetrofitInterface? = null
 
-            val gsonBuilder = GsonBuilder()
-            gsonBuilder.excludeFieldsWithModifiers(
-                Modifier.FINAL, Modifier.TRANSIENT, Modifier
-                    .STATIC
-            )
-            gsonBuilder.excludeFieldsWithoutExposeAnnotation()
-            val gson = gsonBuilder.create()
+    fun getInstance(context: Context): RetrofitInterface = instace ?: synchronized(this) {
 
-            val okHttpClient = OkHttpClient()
-                .newBuilder()
-                .addInterceptor(logging)
-                .connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS)
-                .writeTimeout(120, TimeUnit.SECONDS)
-                .build()
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl(ApiConstants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(okHttpClient)
-                .build()
+        val gsonBuilder = GsonBuilder()
+        gsonBuilder.excludeFieldsWithModifiers(
+            Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC
+        )
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation()
+        val gson = gsonBuilder.create()
 
-            retrofit.create(RetrofitInterface::class.java)
-        }
+        val okHttpClient = OkHttpClient()
+            .newBuilder()
+            .addInterceptor(AuthenticationInterceptor(context))
+            .addInterceptor(logging)
+            .connectTimeout(120, TimeUnit.SECONDS)
+            .readTimeout(120, TimeUnit.SECONDS)
+            .writeTimeout(120, TimeUnit.SECONDS)
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(ApiConstants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(okHttpClient)
+            .build()
+        retrofit.create(RetrofitInterface::class.java)
     }
 }
