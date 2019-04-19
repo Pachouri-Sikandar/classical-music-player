@@ -13,7 +13,7 @@ import android.support.annotation.NonNull
  *
  *  The purpose of this class is to use the View Model lifecycle owner
  */
-class AppViewModel(application: Application) : AndroidViewModel(application), LifecycleOwner {
+open class AppViewModel(application: Application) : AndroidViewModel(application), LifecycleOwner {
 
     private val mRegister: LifecycleRegistry
 
