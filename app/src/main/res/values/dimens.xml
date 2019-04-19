@@ -20,4 +20,6 @@
     <dimen name="height_item">112dp</dimen>
     <dimen name="image_width">108dp</dimen>
     <dimen name="image_height">76dp</dimen>
+
+    <dimen name="small_button_height">40dp</dimen>
 </resources>

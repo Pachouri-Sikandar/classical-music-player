@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layoutErrorContainer"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12"
+        android:clipChildren="true"
+        android:orientation="vertical"
+        android:visibility="gone"
+>
+
+    <TextView
+            android:id="@+id/textViewErrorTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/error_sorry"
+            android:textAllCaps="false"
+            android:textColor="@color/buttonColorNormal"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold"
+    />
+
+    <TextView
+            android:id="@+id/textViewErrorSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_8"
+            android:gravity="center"
+            android:text="@string/error_message_something_wrong"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/sp_16"
+    />
+
+    <Button
+            android:id="@+id/buttonTryAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/small_button_height"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_36"
+            android:background="@drawable/selector_primary"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_12"
+            android:paddingRight="@dimen/dp_12"
+            android:text="@string/button_try_again"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_16"
+    />
+</LinearLayout>
+

@@ -8,4 +8,6 @@
     <color name="colorBlack">#000000</color>
     <color name="text_title">#de000000</color>
     <color name="text_sub_title">#8a000000</color>
+    <color name="buttonColorNormal">#7ed321</color>
+    <color name="buttonColorPressed">#6cb61c</color>
 </resources>
