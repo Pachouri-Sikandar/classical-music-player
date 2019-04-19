@@ -1,5 +1,9 @@
 package com.pachouri.classicalmusicplayer.viewmodel
 
+import android.arch.lifecycle.ViewModelProviders
+import android.support.v4.app.Fragment
+import com.pachouri.classicalmusicplayer.viewmodel.factory.AppViewModelFactory
+import com.pachouri.classicalmusicplayer.viewmodel.provider.AlbumsListViewModel
 /**
  * Created by Ankit Pachouri on 17/04/19.
  *
@@ -8,17 +12,20 @@ package com.pachouri.classicalmusicplayer.viewmodel
  */
 class ViewModelProvider {
 
-    @Volatile
-    private var mInstance: ViewModelProvider? = null
+    companion object {
+        @Volatile
+        private var mInstance: ViewModelProvider? = null
 
-    @Synchronized
-    fun getInstance(): ViewModelProvider? {
-        if (mInstance == null) {
-            synchronized(ViewModelProvider::class.java) {
-                mInstance = ViewModelProvider()
+        fun getInstance(): ViewModelProvider =
+            mInstance ?: synchronized(this) {
+                return ViewModelProvider()
             }
+    }
 
-        }
-        return mInstance
+
+    fun getAlbumsListViewModel(fragment: Fragment): AlbumsListViewModel {
+        val factory = AppViewModelFactory.getInstance(fragment)
+        return ViewModelProviders.of(fragment, factory)
+            .get(AlbumsListViewModel::class.java.getName(), AlbumsListViewModel::class.java)
     }
 }
