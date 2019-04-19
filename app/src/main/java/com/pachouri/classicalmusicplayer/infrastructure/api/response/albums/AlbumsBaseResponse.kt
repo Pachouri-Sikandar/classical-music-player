@@ -1,6 +1,5 @@
 package com.pachouri.classicalmusicplayer.infrastructure.api.response.albums
 
-import android.content.ClipData.Item
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
