@@ -50,5 +50,13 @@ class CommonUtils {
             val encoded = Base64.encodeToString(bytes, Base64.NO_WRAP)
             return prefix + " " + encoded
         }
+
+        /**
+         * Method to convert dp to pixel
+         */
+        fun convertDpToPixel(context: Context, dp: Float): Int {
+            val density = context.resources.displayMetrics.density
+            return (dp * density).toInt()
+        }
     }
 }

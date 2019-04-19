@@ -6,4 +6,6 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#40BEBEBE</color>
     <color name="colorBlack">#000000</color>
+    <color name="text_title">#de000000</color>
+    <color name="text_sub_title">#8a000000</color>
 </resources>
