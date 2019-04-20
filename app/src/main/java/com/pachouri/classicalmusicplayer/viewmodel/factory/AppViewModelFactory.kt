@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.support.v4.app.Fragment
 import com.pachouri.classicalmusicplayer.viewmodel.provider.AlbumsListViewModel
+import com.pachouri.classicalmusicplayer.viewmodel.provider.TokenViewModel
 
 /**
  * Created by Ankit Pachouri on 18/04/19.
@@ -29,6 +30,9 @@ class AppViewModelFactory(fragment: Fragment) : ViewModelProvider.NewInstanceFac
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AlbumsListViewModel::class.java)) {
             return AlbumsListViewModel(mApplication) as T
+        }
+        if (modelClass.isAssignableFrom(TokenViewModel::class.java)) {
+            return TokenViewModel(mApplication) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
